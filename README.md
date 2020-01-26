@@ -11,4 +11,3 @@ Screens:
 - [ ] Photo Detail
 - [ ] Photo Comments (Challenge)
 - [ ] Photo Likes (Challenge)
-      ~
