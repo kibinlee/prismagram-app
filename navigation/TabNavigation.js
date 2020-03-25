@@ -6,6 +6,7 @@ import Home from "../screens/Tabs/Home";
 import Search from "../screens/Tabs/Search";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
+import MessagesLink from "../components/MessagesLink";
 
 const stackFactory = (initialRoute, customConfig) =>
   createStackNavigator({
@@ -19,11 +20,7 @@ const TabNavigation = createBottomTabNavigator({
   Home: {
     screen: stackFactory(Home, {
       title: "Home",
-      headerRight: (
-        <TouchableOpacity>
-          <Text>Hello</Text>
-        </TouchableOpacity>
-      )
+      headerRight: <MessagesLink />
     })
   },
   Search: {
