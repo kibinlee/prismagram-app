@@ -6,8 +6,8 @@ import TabNavigation from "../navigation/TabNavigation";
 import MainNavigation from "../navigation/MainNavigation";
 
 export default () => {
-  // const isLoggedIn = useIsLoggedIn();
-  const isLoggedIn = true;
+  const isLoggedIn = useIsLoggedIn();
+  // const isLoggedIn = true;
   // console.log(isLoggedIn);
   // const logIn = useLogIn();
   // const logOut = useLogOut();
