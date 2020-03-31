@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AppLoading } from "expo";
-import * as Font from "expo-font";
-// import * as Asset from "expo-asset";
 import { Asset } from "expo-asset";
+import * as Font from "expo-font";
 import { AsyncStorage } from "react-native";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { persistCache } from "apollo-cache-persist";
 import ApolloClient from "apollo-boost";
 import { ThemeProvider } from "styled-components";
 import { ApolloProvider } from "react-apollo-hooks";
-import options from "./apollo";
+import apolloClientOptions from "./apollo";
 import styles from "./styles";
 import NavController from "./components/NavController";
 import { AuthProvider } from "./AuthContext";
@@ -32,9 +32,16 @@ export default function App() {
         cache,
         storage: AsyncStorage
       });
+      const token = await AsyncStorage.getItem("jwt");
       const client = new ApolloClient({
         cache,
-        ...options
+        request: async operation => {
+          const token = await AsyncStorage.getItem("jwt");
+          return operation.setContext({
+            headers: { Authorization: `Bearer ${token}` }
+          });
+        },
+        ...apolloClientOptions
       });
 
       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
