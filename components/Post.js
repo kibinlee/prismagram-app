@@ -23,14 +23,32 @@ const Location = styled.Text`
   font-size: 12px;
 `;
 const IconsContainer = styled.View`
-  padding: 10px;
+  margin-bottom: 5px;
   flex-direction: row;
 `;
 const IconContainer = styled.View`
   margin-right: 10px;
 `;
 
-const Post = ({ user, location, files = [] }) => {
+const InfoContainer = styled.View`
+  padding: 10px;
+`;
+const Caption = styled.Text`
+  margin: 3px 0px;
+`;
+const CommentCount = styled.Text`
+  opacity: 0.5;
+  font-size: 13px;
+`;
+
+const Post = ({
+  user,
+  location,
+  files = [],
+  likeCount,
+  caption,
+  comments = [],
+}) => {
   return (
     <Container>
       <Header>
@@ -51,7 +69,7 @@ const Post = ({ user, location, files = [] }) => {
         showsPagination={false}
         style={{ height: constants.height / 2.5 }}
       >
-        {files.map(file => (
+        {files.map((file) => (
           <Image
             style={{ width: constants.width, height: constants.height / 2.5 }}
             key={file.id}
@@ -59,28 +77,37 @@ const Post = ({ user, location, files = [] }) => {
           />
         ))}
       </Swiper>
-      <IconsContainer>
+      <InfoContainer>
+        <IconsContainer>
+          <Touchable>
+            <IconContainer>
+              <Ionicons
+                size={28}
+                name={
+                  Platform.OS === "ios" ? "ios-heart-empty" : "md-heart-empty"
+                }
+              />
+            </IconContainer>
+          </Touchable>
+          <Touchable>
+            <IconContainer>
+              <Ionicons
+                size={28}
+                name={Platform.OS === "ios" ? "ios-text" : "md-text"}
+              />
+            </IconContainer>
+          </Touchable>
+        </IconsContainer>
         <Touchable>
-          <IconContainer>
-            <Ionicons
-              size={28}
-              name={
-                Platform.OS === "ios" ? "ios-heart-empty" : "md-heart-empty"
-              }
-            />
-          </IconContainer>
+          <Bold>{likeCount === 1 ? "1 like" : `${likeCount} likes`}</Bold>
         </Touchable>
+        <Caption>
+          <Bold>{user.username}</Bold> {caption}
+        </Caption>
         <Touchable>
-          <IconContainer>
-            <Ionicons
-              size={28}
-              name={
-                Platform.OS === "ios" ? "ios-message-empty" : "md-message-empty"
-              }
-            />
-          </IconContainer>
+          <CommentCount>See all {comments.length} comments</CommentCount>
         </Touchable>
-      </IconsContainer>
+      </InfoContainer>
     </Container>
   );
 };
@@ -90,12 +117,12 @@ Post.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     avatar: PropTypes.string,
-    username: PropTypes.string.isRequired
+    username: PropTypes.string.isRequired,
   }).isRequired,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired
+      url: PropTypes.string.isRequired,
     })
   ).isRequired,
   likeCount: PropTypes.number.isRequired,
@@ -106,13 +133,13 @@ Post.propTypes = {
       text: PropTypes.string.isRequired,
       user: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        username: PropTypes.string.isRequired
-      }).isRequired
+        username: PropTypes.string.isRequired,
+      }).isRequired,
     })
   ).isRequired,
   caption: PropTypes.string.isRequired,
   location: PropTypes.string,
-  createdAt: PropTypes.string.isRequired
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default Post;
