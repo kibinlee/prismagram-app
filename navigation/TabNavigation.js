@@ -17,9 +17,9 @@ const stackFactory = (initialRoute, customConfig) =>
       screen: initialRoute,
       navigationOptions: {
         ...customConfig,
-        headerStyle: { ...stackStyles }
-      }
-    }
+        headerStyle: { ...stackStyles },
+      },
+    },
   });
 
 export default createBottomTabNavigator(
@@ -27,7 +27,7 @@ export default createBottomTabNavigator(
     Home: {
       screen: stackFactory(Home, {
         headerRight: <MessagesLink />,
-        headerTitle: <NavIcon name="logo-instagram" size={30} />
+        headerTitle: <NavIcon name="logo-instagram" size={30} />,
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -35,12 +35,12 @@ export default createBottomTabNavigator(
             focused={focused}
             name={Platform.OS === "ios" ? "ios-home" : "md-home"}
           />
-        )
-      }
+        ),
+      },
     },
     Search: {
       screen: stackFactory(Search, {
-        title: "Search"
+        title: "Search",
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -48,8 +48,8 @@ export default createBottomTabNavigator(
             focused={focused}
             name={Platform.OS === "ios" ? "ios-search" : "md-search"}
           />
-        )
-      }
+        ),
+      },
     },
     Add: {
       screen: View,
@@ -59,15 +59,19 @@ export default createBottomTabNavigator(
         tabBarIcon: ({ focused }) => (
           <NavIcon
             focused={focused}
-            size={30}
-            name={Platform.OS === "ios" ? "ios-add" : "md-add"}
+            size={32}
+            name={
+              Platform.OS === "ios"
+                ? "ios-add-circle-outline"
+                : "md-add-circle-outline"
+            }
           />
-        )
-      }
+        ),
+      },
     },
     Notifications: {
       screen: stackFactory(Notifications, {
-        title: "Notifications"
+        title: "Notifications",
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -83,12 +87,12 @@ export default createBottomTabNavigator(
                 : "md-heart-empty"
             }
           />
-        )
-      }
+        ),
+      },
     },
     Profile: {
       screen: stackFactory(Profile, {
-        title: "Profile"
+        title: "Profile",
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -96,16 +100,16 @@ export default createBottomTabNavigator(
             focused={focused}
             name={Platform.OS === "ios" ? "ios-person" : "md-person"}
           />
-        )
-      }
-    }
+        ),
+      },
+    },
   },
   {
     tabBarOptions: {
       showLabel: false,
       style: {
-        backgroundColor: "#FAFAFA"
-      }
-    }
+        backgroundColor: "#FAFAFA",
+      },
+    },
   }
 );
