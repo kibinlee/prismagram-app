@@ -5,6 +5,7 @@ import { gql } from "apollo-boost";
 import { POST_FRAGMENT } from "../fragments";
 import Loader from "../components/Loader";
 import Post from "../components/Post";
+import { ScrollView } from "react-native";
 
 const POST_DETAIL = gql`
   query seeFullPost($id: String!) {
@@ -23,12 +24,12 @@ export default ({ navigation }) => {
     variables: { id: navigation.getParam("id") },
   });
   return (
-    <View styled={{ flex: 1 }}>
+    <ScrollView styled={{ flex: 1 }}>
       {loading ? (
         <Loader />
       ) : (
         data && data.seeFullPost && <Post {...data.seeFullPost} />
       )}
-    </View>
+    </ScrollView>
   );
 };
