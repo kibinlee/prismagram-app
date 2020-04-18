@@ -5,43 +5,15 @@ import { gql } from "apollo-boost";
 import Loader from "../../components/Loader";
 import { useQuery } from "react-apollo-hooks";
 import Post from "../../components/Post";
-
-const View = styled.View`
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-`;
-
-const Text = styled.Text``;
+import { POST_FRAGMENT } from "../../fragments";
 
 const FEED_QUERY = gql`
   {
     seeFeed {
-      id
-      location
-      caption
-      user {
-        id
-        avatar
-        username
-      }
-      files {
-        id
-        url
-      }
-      likeCount
-      isLiked
-      comments {
-        id
-        text
-        user {
-          id
-          username
-        }
-      }
-      createdAt
+      ...PostParts
     }
   }
+  ${POST_FRAGMENT}
 `;
 
 export default () => {
@@ -57,8 +29,6 @@ export default () => {
       setRefreshing(false);
     }
   };
-
-  console.log(loading, data);
   return (
     <ScrollView
       refreshControl={
@@ -70,7 +40,7 @@ export default () => {
       ) : (
         data &&
         data.seeFeed &&
-        data.seeFeed.map(post => <Post key={post.id} {...post} />)
+        data.seeFeed.map((post) => <Post key={post.id} {...post} />)
       )}
     </ScrollView>
   );
